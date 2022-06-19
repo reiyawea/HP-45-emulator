@@ -330,6 +330,7 @@ int opcode10(hp45inst_t* instance, uint8_t opcode)
       sub(instance, &zero, &instance->CX, &instance->CX);
       set1(instance, &temp);
       sub(instance, &instance->CX, &temp, &instance->CX);
+      instance->CY = 1;
       break;
     /* === 6) increment === */
     case 31: // A+1->A
@@ -422,10 +423,10 @@ int opcode1100(hp45inst_t *instance, uint8_t opcode)
       instance->CY = (instance->P == P);
       break;
     case 1: // decrement pointer (P=XXXX i.e. don't care)
-      instance->P--;
+      instance->P = (instance->P - 1) & 0x0F;
       break;
     case 3: // increment pointer (P=XXXX i.e. don't care)
-      instance->P++;
+      instance->P = (instance->P + 1) & 0x0F;
       break;
   }
 
@@ -449,7 +450,7 @@ int opcode1000(hp45inst_t *instance, uint8_t opcode)
       if(N >= 10)return -2;
       if(instance->P < 14)
         instance->CX.nibble[instance->P] = N;
-      instance->P--;
+      instance->P = (instance->P - 1) & 0x0F;
       break;
     case 2:
     case 3:
