@@ -14,3 +14,4 @@ Can be ported to embedded project like 8051, AVR, STM32 etc.
 To simulate the HP-45 at actual speed:
 1. call `hp45_init` once
 2. call `hp45_run` once per 286us (precisely speaking, 35 times per 10ms).
+3. call `make_display` to convert registers into buffer array for LED scanning.
